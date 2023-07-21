@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    top: 0;
+    box-sizing: border-box;
+}
+.wrap {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.view {
+    width: 500px;
+    height: 500px;
+    background-color: #666; 
+    overflow: hidden;
+}
+.inner {
+    width: 600%;
+    height: 100%;
+    display: flex;
+}
+.slide {
+    width: 500px;
+    height: 500px;
+}

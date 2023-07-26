@@ -1,3 +1,3 @@
-export default function NotFoundPage() {
+export default function NotFoundingPage() {
     return <div>페이지 없음</div>;
 }

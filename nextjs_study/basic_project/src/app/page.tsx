@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import styles from './page.module.css';
-import os from 'os'; //노드 APIs
 import Counter from '@/components/Counter';
 
 export default function Home() {

@@ -1,5 +1,5 @@
 interface Greetable {
-    name: string;
+    readonly name: string;
 
     greet(phrase: string): void;
 }
@@ -20,6 +20,7 @@ class Person implements Greetable {
 let user1: Greetable;
 
 user1 = new Person('이름');
+//user1.name = '바꿈'; //readonly 속성 때문에 변경 불가
 
 user1.greet('이녀석의 이름은:');
 console.log(user1);

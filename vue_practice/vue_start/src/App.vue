@@ -1,34 +1,46 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
+import TotalList from './components/items/totalList.vue';
 
 const text = ref([{ id: 0, contents: '입력 리스트' }]);
 const input = ref('');
 const count = ref(0);
 
+const isActive = ref(false);
+const isError = ref(false);
+
 const onClick = () => {
+    if (text.value[0].id === 0) {
+        text.value.splice(0, 1);
+    }
     if (input.value) {
         count.value++;
         text.value.push({ id: count.value, contents: input.value });
         input.value = '';
     }
 };
-</script>
 
-<!-- <script setup>
-import { nextTick, reactive } from 'vue';
+const onDelete = list => {
+    text.value = text.value.filter(e => e.id !== list.id);
+};
 
-const text = reactive({
-    text: [{ id: 0, contents: '입력 리스트' }],
-    input: '',
-    count: 0,
+const onCheck = () => {
+    isActive.value = !isActive.value;
+};
+
+const totalList = computed(() => {
+    if (text.value[0].id === 0) {
+        return text.value.length - 1;
+    } else {
+        return text.value.length;
+    }
 });
 
-const onClick = e => {
-    text.count++;
-    text.text.push({ id: text.count, contents: text.input });
-    text.input = '';
-};
-</script> -->
+const classObject = computed(() => ({
+    'text-active': isActive.value && !isError.value,
+    'text-danger': isError.value,
+}));
+</script>
 
 <template>
     <header class="header">
@@ -37,13 +49,19 @@ const onClick = e => {
             <form @submit.prevent.stop class="todoForm">
                 <div class="todoInput">
                     <input type="text" v-model="input" />
-                    <button @click="onClick" class="todoAddBtn">텍스트 추가</button>
+                    <button @click="onClick" class="todoAddBtn">리스트 추가</button>
                 </div>
-                <p :class="'classText'" v-for="list in text" :key="list.id">{{ `${list.id}. ${list.contents}` }}</p>
-                <!-- <p v-else>토글된 텍스트</p> -->
-                <!-- <button @click="e => onClick(e, '지랄')">토글 버튼</button> -->
+                <div class="todoList" v-for="(list, index) in text" :key="list.id">
+                    <p class="classText" :class="classObject">
+                        {{ `${index + 1}. ${list.contents}` }}
+                    </p>
+                    <button @click="onDelete(list)" v-if="list.id !== 0">삭제</button>
+                </div>
             </form>
         </section>
+        <!-- <div class="totalList">총 리스트 수: {{ totalList }}개</div>
+        <button @click="onCheck" class="colorCheckBtn">체크</button> -->
+        <TotalList :click="onCheck" :totalList="totalList" />
     </header>
 </template>
 
@@ -70,6 +88,7 @@ const onClick = e => {
     border-radius: 10px;
     position: relative;
     background-color: #34495e;
+    margin-bottom: 10px;
 }
 .todoBox::before {
     content: '';
@@ -88,6 +107,7 @@ const onClick = e => {
 }
 
 .todoForm .todoInput {
+    width: 100%;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -109,12 +129,42 @@ const onClick = e => {
     cursor: pointer;
 }
 
-#classText {
-    text-decoration: underline;
+.todoList {
+    display: flex;
+    align-items: center;
 }
-.classText {
-    color: 'purple';
+
+.todoList .classText {
     font-size: 20px;
     color: #fff;
+    margin-right: 5px;
+}
+.todoList .classText.text-active {
+    color: #41b883;
+}
+.todoList .classText.text-danger {
+    color: #f3de24;
+}
+
+.todoList button {
+    font-size: 14px;
+    color: #000;
+    border-radius: 6px;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.totalList {
+    margin-bottom: 5px;
+    background-color: #000;
+}
+.colorCheckBtn {
+    padding: 5px;
+    border-radius: 5px;
+    padding: 5px 10px;
+    border: 1px solid #828282;
+    background-color: #eee;
+    color: #34495e;
+    cursor: pointer;
 }
 </style>

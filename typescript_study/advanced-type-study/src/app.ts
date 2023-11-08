@@ -13,14 +13,14 @@
 // interface Admin {
 //     name: string;
 //     privileges: string[];
-// }
+// };
 
-// interface Employee {
+// type Employee = {
 //     name: string;
 //     startDate: Date;
-// }
+// };
 
-// interface ElevatedEmployee extends Admin, Employee {}
+// type ElevatedEmployee = Admin & Employee;
 
 // const person1: ElevatedEmployee = {
 //     name: '직원 이름',

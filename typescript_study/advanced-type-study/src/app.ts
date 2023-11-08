@@ -105,12 +105,45 @@
 
 // 요소 뒤에 as 타입 으로 입력해 동일한 결과를 낼 수 있다.
 // 리액트 같이 꺽쇠가 다른 요소로 사용될 수 있을 때 이 방법으로 해결이 가능함
-const inputText2 = document.getElementById('text-input')! as HTMLInputElement;
-inputText2.value = '텍스트입력';
+// const inputText2 = document.getElementById('text-input')! as HTMLInputElement;
+// inputText2.value = '텍스트입력';
 
-// !를 사용하지 않고 null이 아니란 것을 나타내려면 조건문을 사용해야 한다.
-const inputText3 = document.getElementById('text-input');
-if (inputText3) {
-    //조건문으로 이미 null이 아니란걸 알려줬기 때문에 안에 괄호로 as를 사용해 적용 (<>도 사용 가능)
-    (inputText3 as HTMLInputElement).value = '텍스트입력';
+
+
+interface ErrorContainer {
+    // id: string;
+    [prop: string]: string;
 }
+
+const errorBag:ErrorContainer = {
+    // email: 1, //문자열이 아니라서 에러가 발생함
+    // 1: '이메일이 아닌데?', //key의 숫자는 문자열로 취급할 수 있음
+    email: '이메일이 아닌데?',
+    userName: '이름은 한글로 적어야겠지?',
+}
+
+const form = document.getElementById('form') as HTMLFormElement;
+const idText = document.getElementById('text-input') as HTMLInputElement;
+const nameText = document.getElementById('name-input') as HTMLInputElement;
+const button = document.getElementById('button') as HTMLButtonElement;
+const regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+const regExpName = /^[가-힣]*$/;
+
+if (form) {
+    form.addEventListener("submit", (e)=>{
+        e.preventDefault();
+
+
+        if(!regExpEmail.test(idText.value)){
+            alert(errorBag.email);
+            return;
+        };
+        if(!regExpName.test(nameText.value)){
+            alert(errorBag.userName);
+            return;
+        }
+        alert('로그인 성공!');
+    });
+}
+
+

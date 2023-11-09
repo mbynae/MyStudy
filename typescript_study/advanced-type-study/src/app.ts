@@ -156,6 +156,8 @@
 
 // const result2 = add(1, 2); //return 타입: number
 
+//옵셔널 체이닝을 통해 선택적으로 타입을 지정할 수 있다.
+//?로 나타내며, 해당 속성이 없어도 에러가 발생하지 않음
 type TypeUserData = {
     id: string;
     name: string;
@@ -170,4 +172,6 @@ const userData: TypeUserData = {
     job: { title: '개발자' },
 };
 
+//옵셔널 체이닝이 적용돤 속성은 undefined일 가능성이 있기 때문에 ?를 적용해줘야 에러가 발생하지 않는다.
+//job?: { title: string, description: string | undefined} | undefind
 console.log(`이녀석의 신상정보는 ${userData.id} ${userData.name} ${userData.age} ${userData.job?.title} ${userData.job?.description}`);

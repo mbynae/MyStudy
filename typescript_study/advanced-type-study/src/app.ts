@@ -30,19 +30,6 @@
 
 // console.log(person1);
 
-// type Combinable = string | number;
-// type Numeric = number | boolean;
-
-// type Universal = Combinable & Numeric;
-
-// function add(a: Combinable, b: Combinable) {
-//     if (typeof a === 'string' || typeof b === 'string') {
-//         return a.toString() + b.toString();
-//     }
-//     return a + b;
-// }
-// console.log(add('1', 10));
-
 // type UnKnownEmployee = Admin | Employee;
 
 // function printEmployeeInformation(emp: UnKnownEmployee) {
@@ -108,42 +95,63 @@
 // const inputText2 = document.getElementById('text-input')! as HTMLInputElement;
 // inputText2.value = '텍스트입력';
 
+// interface ErrorContainer {
+//     // id: string;
+//     [prop: string]: string;
+// }
 
+// const errorBag: ErrorContainer = {
+//     // email: 1, //문자열이 아니라서 에러가 발생함
+//     // 1: '이메일이 아닌데?', //key의 숫자는 문자열로 취급할 수 있음
+//     email: '이메일이 아닌데?',
+//     userName: '이름은 한글로 적어야겠지?',
+// };
 
-interface ErrorContainer {
-    // id: string;
-    [prop: string]: string;
+// const form = document.getElementById('form') as HTMLFormElement;
+// const idText = document.getElementById('text-input') as HTMLInputElement;
+// const nameText = document.getElementById('name-input') as HTMLInputElement;
+// const button = document.getElementById('button') as HTMLButtonElement;
+// const regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+// const regExpName = /^[가-힣]*$/;
+
+// if (form) {
+//     form.addEventListener('submit', e => {
+//         e.preventDefault();
+
+//         if (!regExpEmail.test(idText.value)) {
+//             alert(errorBag.email);
+//             return;
+//         }
+//         if (!regExpName.test(nameText.value)) {
+//             alert(errorBag.userName);
+//             return;
+//         }
+//         alert('로그인 성공!');
+//     });
+// }
+
+// type Numeric = number | boolean;
+
+// type Universal = Combinable & Numeric;
+
+type Combinable = string | number;
+
+//함수 위에 함수 오버로드를 작성해서 매개변수 타입에 따른 결과 타입을 명시해줌
+function add(a: string, b: string): string;
+function add(a: number, b: number): number;
+function add(a: string, b: number): string;
+function add(a: number, b: string): string;
+function add(a: Combinable, b: Combinable) {
+    if (typeof a === 'string' || typeof b === 'string') {
+        return a.toString() + b.toString();
+    }
+    return a + b;
 }
 
-const errorBag:ErrorContainer = {
-    // email: 1, //문자열이 아니라서 에러가 발생함
-    // 1: '이메일이 아닌데?', //key의 숫자는 문자열로 취급할 수 있음
-    email: '이메일이 아닌데?',
-    userName: '이름은 한글로 적어야겠지?',
-}
+//함수 오버로드에 의해 string이 return 되는 것을 인지 (string (+3 overloads) 으로 표시됨)
+const result = add('이름', '나이');
 
-const form = document.getElementById('form') as HTMLFormElement;
-const idText = document.getElementById('text-input') as HTMLInputElement;
-const nameText = document.getElementById('name-input') as HTMLInputElement;
-const button = document.getElementById('button') as HTMLButtonElement;
-const regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-const regExpName = /^[가-힣]*$/;
+//string이 반환되는 것을 알기 떄문에 에러가 발생하지 않는다.
+const divider = result.split('');
 
-if (form) {
-    form.addEventListener("submit", (e)=>{
-        e.preventDefault();
-
-
-        if(!regExpEmail.test(idText.value)){
-            alert(errorBag.email);
-            return;
-        };
-        if(!regExpName.test(nameText.value)){
-            alert(errorBag.userName);
-            return;
-        }
-        alert('로그인 성공!');
-    });
-}
-
-
+const result2 = add(1, 2); //return 타입: number

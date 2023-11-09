@@ -134,24 +134,40 @@
 
 // type Universal = Combinable & Numeric;
 
-type Combinable = string | number;
+// type Combinable = string | number;
 
-//함수 위에 함수 오버로드를 작성해서 매개변수 타입에 따른 결과 타입을 명시해줌
-function add(a: string, b: string): string;
-function add(a: number, b: number): number;
-function add(a: string, b: number): string;
-function add(a: number, b: string): string;
-function add(a: Combinable, b: Combinable) {
-    if (typeof a === 'string' || typeof b === 'string') {
-        return a.toString() + b.toString();
-    }
-    return a + b;
-}
+// //함수 위에 함수 오버로드를 작성해서 매개변수 타입에 따른 결과 타입을 명시해줌
+// function add(a: string, b: string): string;
+// function add(a: number, b: number): number;
+// function add(a: string, b: number): string;
+// function add(a: number, b: string): string;
+// function add(a: Combinable, b: Combinable) {
+//     if (typeof a === 'string' || typeof b === 'string') {
+//         return a.toString() + b.toString();
+//     }
+//     return a + b;
+// }
 
-//함수 오버로드에 의해 string이 return 되는 것을 인지 (string (+3 overloads) 으로 표시됨)
-const result = add('이름', '나이');
+// //함수 오버로드에 의해 string이 return 되는 것을 인지 (string (+3 overloads) 으로 표시됨)
+// const result = add('이름', '나이');
 
-//string이 반환되는 것을 알기 떄문에 에러가 발생하지 않는다.
-const divider = result.split('');
+// //string이 반환되는 것을 알기 떄문에 에러가 발생하지 않는다.
+// const divider = result.split('');
 
-const result2 = add(1, 2); //return 타입: number
+// const result2 = add(1, 2); //return 타입: number
+
+type TypeUserData = {
+    id: string;
+    name: string;
+    age: number;
+    job?: { title: string; description?: string };
+};
+
+const userData: TypeUserData = {
+    id: '아이디',
+    name: '이름',
+    age: 30,
+    job: { title: '개발자' },
+};
+
+console.log(`이녀석의 신상정보는 ${userData.id} ${userData.name} ${userData.age} ${userData.job?.title} ${userData.job?.description}`);

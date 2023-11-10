@@ -158,20 +158,34 @@
 
 //옵셔널 체이닝을 통해 선택적으로 타입을 지정할 수 있다.
 //?로 나타내며, 해당 속성이 없어도 에러가 발생하지 않음
-type TypeUserData = {
-    id: string;
-    name: string;
-    age: number;
-    job?: { title: string; description?: string };
-};
+// type TypeUserData = {
+//     id: string;
+//     name: string;
+//     age: number;
+//     job?: { title: string; description?: string };
+// };
 
-const userData: TypeUserData = {
-    id: '아이디',
-    name: '이름',
-    age: 30,
-    job: { title: '개발자' },
-};
+// const userData: TypeUserData = {
+//     id: '아이디',
+//     name: '이름',
+//     age: 30,
+//     job: { title: '개발자' },
+// };
 
-//옵셔널 체이닝이 적용돤 속성은 undefined일 가능성이 있기 때문에 ?를 적용해줘야 에러가 발생하지 않는다.
-//job?: { title: string, description: string | undefined} | undefind
-console.log(`이녀석의 신상정보는 ${userData.id} ${userData.name} ${userData.age} ${userData.job?.title} ${userData.job?.description}`);
+// //옵셔널 체이닝이 적용돤 속성은 undefined일 가능성이 있기 때문에 ?를 적용해줘야 에러가 발생하지 않는다.
+// //job?: { title: string, description: string | undefined} | undefind
+// console.log(`이녀석의 신상정보는 ${userData.id} ${userData.name} ${userData.age} ${userData.job?.title} ${userData.job?.description}`);
+
+
+// function UserInput(input?: string | number | boolean){
+//     // ||는 false 값이 아닐때만 입력 값을 출력해준다.
+//     // 따라서 빈 문자열이나 숫자 0, false 값을 그대로 출력할 수가 없다. 
+//     return input || 'default value';
+// }
+
+function UserInput(input?: string | number | boolean){
+    // ||는 false 값이 아닐때만 입력 값을 출력해준다.
+    // 따라서 빈 문자열이나 숫자 0, false 값을 그대로 출력할 수가 없다. 
+    return input ?? 'default value';
+}
+console.log(UserInput(0));

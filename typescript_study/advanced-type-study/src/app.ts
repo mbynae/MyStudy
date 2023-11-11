@@ -183,9 +183,181 @@
 //     return input || 'default value';
 // }
 
-function UserInput(input?: string | number | boolean){
-    // ||는 false 값이 아닐때만 입력 값을 출력해준다.
-    // 따라서 빈 문자열이나 숫자 0, false 값을 그대로 출력할 수가 없다. 
-    return input ?? 'default value';
+// function UserInput(input?: string | number | boolean){
+//     // null 병합 연산자는 null이나 undefined이 아닐 때만 입력 값을 출력해준다.
+//     // 그래서 false값을 갖는 값도 그대로 출력이 가능하다.
+//     return input ?? 'default value';
+// }
+// console.log(UserInput(0));
+
+
+//시퀸스1
+// let text1 = '문자열 텍스트1'; //ts가 string으로 추론
+// const text2 = '문자열 텍스트2' //ts가 '문자열 텍스트2'라는 리터럴 타입을 추론
+// const obj = { //각 객체값에 해당하는 객체 타입을 추론
+//     name: '이름',
+//     age: 30,
+//     job: {title: '개발자', description: '코딩 노예'}
+// };
+// function fn(x: number, y: number): {xValue:number, yValue:number} {
+//     return {xValue: x, yValue: y};
+// };
+
+// //타입에 값을 넣으면 에러가 발생
+// // let exampleOutput:text = '예시 문자열';
+
+// //typeof 값을 넣으면 추론된 해당 타입이 된다. (string)
+// let exampleOutput1: typeof text1 = '예시 문자열1';
+
+// //리터럴 타입과 일치하는 '문자열 텍스트2'가 아니면 에러발생
+// //let exampleOutput2: typeof text2 = '예시 문자열2'; 
+
+// // 타입과 값은 다르기 때문에 타입에 값을 입력하면 안된다.
+// //type P = text1; //에러
+// type p = typeof text1; //정상
+
+// //객체의 값을 추론해 타입으로 입력했으므로 정상 작동
+// const exampleObj: typeof obj = {
+//     name: '아무나',
+//     age: 100,
+//     job: {title: '무직백수', description: '맨날 놀기만 한데요.'}
+// }
+
+// //(x: number, y: number) => {xValue: number; yValue: number;} 타입이 입력됨
+// type fnType = typeof fn;
+
+// //잘 작동된다. fnType 대신 typeof fn를 넣어도 정상 작동
+// const exampleFn:fnType = (x, y) => {
+//     return {xValue: x, yValue: y};
+// }
+// exampleFn(10, 3);
+
+
+// //시퀸스2
+// type returnGeneric<T> = T;
+// //제네릭 안에 값을 넣으면 에러 발생
+// // type fnGeneric = returnGeneric<obj>
+
+// // typeof로 추론하게 하면 정상 작동
+// type fnGeneric = returnGeneric<typeof obj>
+
+// //클래스는 클래스 자체가 객체 타입이 될 수 있으므로 typeof가 필요없다.
+// class TypeClass {
+//     constructor(public name: string, public age: number){}
+// }
+// const exampleClass:TypeClass = {
+//     name: '이름',
+//     age: 30
+// }
+
+// type Obj = {
+//     color: string,
+//     count: number,
+//     array: string[],
+//     object: {
+//         name: string,
+//         age: number
+//     },
+//     func: ()=>void
+// };
+// //P의 타입은 Obj의 키를 리터럴 타입으로 모아 놓은 유니언 타입이 된다.
+// type Union = keyof Obj;
+
+// //각각 유니언 타입만 입력 가능
+// const color:Union = 'color';
+// const count:Union = 'count';
+// const object:Union = 'object';
+// const func:Union = 'func';
+// //객체안의 속성은 입력 불가능
+// //const name: Union = 'object.name'
+
+// /////
+
+// // 인덱스 시그니처로 key에 타입을 입력하면 keyof 타입은 해당 인덱스 타입이 된다.
+// type Obj2 = {[key: string]: unknown};
+// type exObj2 = keyof Obj2; // number 타입 배정
+// const key:exObj2 = 2;
+
+// /////
+
+// const obj = {
+//     red: '빨간색',
+//     green: '초록색',
+//     blue: '파란색',
+//     count: 3,
+// }
+// //keyof와 typeof를 조합하면 객체의 key를 리터럴 타입으로 모은 유니언 타입이 된다. 
+// type Color = keyof typeof obj; // "count" | "red" | "green" | "blue"
+// const red:Color = 'red';
+// const count2: Color = 'count';
+
+// //객체의 value의 타입을 모아서 유니언으로 만들고 싶다면 typeof 객체를 []로 묶어준다.
+// type ColorType = typeof obj[keyof typeof obj]; // string | number
+// /////
+
+
+
+// //value도 리터럴 타입으로 사용하고 싶다면 상수 타입으로 만들면 된다.
+// const objConst = {
+//     red: '빨간색',
+//     green: '초록색',
+//     blue: '파란색',
+//     count: 3,
+// } as const
+
+// // "빨간색" | "초록색" | "파란색" | 3
+// type ColorValue = typeof objConst[keyof typeof objConst];
+// const redValue:ColorValue = '빨간색';
+// const countValue:ColorValue = 3;
+
+
+////
+
+// type Person = {
+//     name: string,
+//     age: number,
+//     alive: boolean
+// }
+// //[]안에 타입 key를 넣어 해당 타입을 입력
+// type Age = Person['age']; // number 타입
+
+// //유니언 타입 생성
+// type Union = Person['name' | 'alive']; //string | boolean
+
+// //keyof를 활용해 사용된 모든 타입을 유니언으로 생성
+// type AllUnion = Person[keyof Person]; //string | number | boolean
+
+// // 직접 리터럴 타입으로 key를 넣어 유니언 타입 생성
+// type AliveOrName = 'alive' | 'name';
+// type ChoiceUnion = Person[AliveOrName]; //string | boolean
+
+/////
+
+// const MyArray = [
+//     { name: "Alice", age: 15 },
+//     { name: "Bob", age: 23 },
+//     { name: "Eve", age: 38 },
+// ];
+
+// //number로 인덱싱 해서 배열 요소의 타입 추출
+// type Person = typeof MyArray[number]; //number을 안붙이면 {}[] 형태가 된다.
+
+// //동일하게 인덱싱으로 특정 key 타입 추출
+// type Age = typeof MyArray[number]['age']; //number
+// //or type Age = Person['age']; //number
+
+
+////
+
+type Person = {
+    name: string,
+    age: number,
+    alive: boolean
 }
-console.log(UserInput(0));
+
+//인덱싱 타입에는 무조건 타입만 올 수 있다.
+const key = 'alive';
+//type Alive = Person[key]; // key가 타입이 아니기 때문에 에러 발생
+
+type Key = 'alive';
+type Alive = Person[Key]; //정상 작동

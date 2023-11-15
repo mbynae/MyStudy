@@ -15,6 +15,7 @@
 // console.log(mergeObj.age); //타입스크립트가 결과값이 뭔지 이해하기 때문에 에러 발생X
 
 interface Lengthy {
+<<<<<<< HEAD
     length: number;
 }
 
@@ -31,3 +32,25 @@ function countAndDescribe<T extends Lengthy>(element: T) {
 }
 
 console.log(countAndDescribe(['이름', '나이']));
+=======
+    length: number
+}
+
+//T에 속하는 속성이 뭔지 알려줘서 정상 작동
+//문자열이든 배열이든 length 속성을 갖을 수 있다면 유연하게 전부 허용
+function countAndPrint<T extends Lengthy>(element: T){
+    let descriptionText = "값이 하나도 없음";
+    
+    //타입스크립트가 element의 속성을 모르기 때문에 length에서 타입 에러 발생
+    if(element.length === 1){
+        descriptionText = "값이 1개 있음";
+    }
+    if(element.length > 1){
+        descriptionText = `값이 ${element.length}개 있음`;
+    }
+
+    return [element, descriptionText];
+}
+console.log(countAndPrint("아무거나텍스트"));
+console.log(countAndPrint(['이름', '나이']));
+>>>>>>> f5e62f4d1465cf98e0e0540d481e46c111c535ee

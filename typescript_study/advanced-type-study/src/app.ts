@@ -46,24 +46,23 @@
 type Primitive = string | number | boolean;
 
 //클래스에서 제네릭을 통해 인수의 공통된 타입을 지정이 가능
-class DataStorage<T> {
-    private data: T[] = [];
+// class DataStorage<T> {
+//     private data:T[] = [];
 
-    addItem(item: T) {
-        this.data.push(item);
-    }
+//     addItem(item:T){
+//         this.data.push(item);
+//     };
 
-    removeItem(item: T) {
-        if (typeof item === 'object') return;
-        this.data.splice(this.data.indexOf(item), 1);
-    }
+//     removeItem(item:T){
+//         this.data.splice(this.data.indexOf(item), 1);
+//     };
 
-    getItems() {
-        return [...this.data];
-    }
-}
+//     getItems(){
+//         return [...this.data];
+//     }
+// }
 
-//new 연산자에 특정 타입을 지정해 해당 타입만 입력하는 클래스 생성
+// //new 연산자에 특정 타입을 지정해 해당 타입만 입력하는 클래스 생성
 // const textStorage = new DataStorage<string>();
 // textStorage.addItem('순서');
 // textStorage.addItem('나이');
@@ -76,8 +75,45 @@ class DataStorage<T> {
 // numberStorage.removeItem(30);
 // console.log(numberStorage.getItems());
 
-const objectStorage = new DataStorage<object>();
-objectStorage.addItem({ name: '이름' });
-objectStorage.addItem({ job: '직업' });
-objectStorage.removeItem({ name: '이름' });
-console.log(objectStorage.getItems());
+// const objectStorage = new DataStorage<object>();
+// objectStorage.addItem({name: '이름'});
+// objectStorage.addItem({job: '직업'});
+// objectStorage.removeItem({name: '이름'});
+// //배열/객체는 참조값이므로 주소가 달라 객체 제거가 불가능
+// console.log(objectStorage.getItems()); // {name: '이름'} //splice(-1, 1)로 인해 마지막 요소가 제거
+
+interface PersonInfo {
+    name: string;
+    age: number;
+    gender: string;
+    regDate: Date;
+}
+
+function createPersonInfo(name: string, age: number, gender: string, date: Date): PersonInfo {
+    let personInfo: Partial<PersonInfo> = {};
+    personInfo.name = name;
+    personInfo.age = age;
+    personInfo.gender = gender;
+    personInfo.regDate = date;
+
+    return personInfo as PersonInfo;
+}
+const info = createPersonInfo('이름', 30, '남', new Date());
+
+type MemberListType = [string, string, string];
+
+//Readonly로 읽기 전용 속성으로 변경
+const memberList: Readonly<MemberListType> = ['사람', '유인원', '애완견'];
+console.log(memberList);
+
+interface Label {
+    label: string;
+}
+
+interface Todo extends Label {
+    title: string;
+}
+
+const todoTitle: Readonly<Partial<Todo>> = {
+    title: 'Delete inactive users',
+};

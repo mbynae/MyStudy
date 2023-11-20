@@ -43,39 +43,41 @@
 // }
 // extractAndConvert({ name: '이름' }, 'name'); //정상 작동
 
+type Primitive = string | number | boolean;
+
 //클래스에서 제네릭을 통해 인수의 공통된 타입을 지정이 가능
 class DataStorage<T> {
-    private data:T[] = [];
+    private data: T[] = [];
 
-    addItem(item:T){
+    addItem(item: T) {
         this.data.push(item);
-    };
+    }
 
-    removeItem(item:T){
+    removeItem(item: T) {
+        if (typeof item === 'object') return;
         this.data.splice(this.data.indexOf(item), 1);
-    };
+    }
 
-    getItems(){
+    getItems() {
         return [...this.data];
     }
 }
 
-//new 연산자에 특정 타입을 지정해 해당 타입만 입력하는 클래스 생성 
-const textStorage = new DataStorage<string>();
-textStorage.addItem('순서');
-textStorage.addItem('나이');
-textStorage.removeItem('나이');
-console.log(textStorage.getItems());
+//new 연산자에 특정 타입을 지정해 해당 타입만 입력하는 클래스 생성
+// const textStorage = new DataStorage<string>();
+// textStorage.addItem('순서');
+// textStorage.addItem('나이');
+// textStorage.removeItem('나이');
+// console.log(textStorage.getItems());
 
-const numberStorage = new DataStorage<number>();
-numberStorage.addItem(1);
-numberStorage.addItem(30);
-numberStorage.removeItem(30);
-console.log(numberStorage.getItems());
+// const numberStorage = new DataStorage<number>();
+// numberStorage.addItem(1);
+// numberStorage.addItem(30);
+// numberStorage.removeItem(30);
+// console.log(numberStorage.getItems());
 
 const objectStorage = new DataStorage<object>();
-objectStorage.addItem({name: '이름'});
-objectStorage.addItem({job: '직업'});
-objectStorage.removeItem({name: '이름'});
+objectStorage.addItem({ name: '이름' });
+objectStorage.addItem({ job: '직업' });
+objectStorage.removeItem({ name: '이름' });
 console.log(objectStorage.getItems());
-

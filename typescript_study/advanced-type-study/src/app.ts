@@ -80,39 +80,38 @@
 // //배열/객체는 참조값이므로 주소가 달라 객체 제거가 불가능
 // console.log(objectStorage.getItems()); // {name: '이름'} //splice(-1, 1)로 인해 마지막 요소가 제거
 
-interface PersonInfo {
-    name: string;
-    age: number;
-    gender: string;
-    regDate: Date;
-}
+// interface PersonInfo {
+//     name: string;
+//     age: number;
+//     gender: string;
+//     regDate: Date;
+// }
 
-function createPersonInfo(name:string, age: number, gender: string, date: Date): PersonInfo {
-    let personInfo: Partial<PersonInfo> = {};
-    personInfo.name = name;
-    personInfo.age = age;
-    personInfo.gender = gender;
-    personInfo.regDate = date;
+// function createPersonInfo(name:string, age: number, gender: string, date: Date): PersonInfo {
+//     let personInfo: Partial<PersonInfo> = {};
+//     personInfo.name = name;
+//     personInfo.age = age;
+//     personInfo.gender = gender;
+//     personInfo.regDate = date;
 
-    return personInfo as PersonInfo;
-}
-const info = createPersonInfo('이름', 30, '남', new Date());
+//     return personInfo as PersonInfo;
+// }
+// const info = createPersonInfo('이름', 30, '남', new Date());
 
-type MemberListType = [string, string, string];
+// type MemberListType = [string, string, string];
 
-//Readonly로 읽기 전용 속성으로 변경
-const memberList: Readonly<MemberListType> = ['사람', '유인원', '애완견'];
-console.log(memberList);
+// //Readonly로 읽기 전용 속성으로 변경
+// const memberList: Readonly<MemberListType> = ['사람', '유인원', '애완견'];
+// console.log(memberList);
 
-interface Label {
-    label: string;
-}
+// interface Label {
+//     label: string;
+// }
 
-interface Todo extends Label {
-    title: string;
-}
+// interface Todo extends Label {
+//     title: string;
+// }
    
-const todoTitle: Readonly<Partial<Todo>> = {
-title: "Delete inactive users",
-};
-
+// const todoTitle: Readonly<Partial<Todo>> = {
+// title: "Delete inactive users",
+// };

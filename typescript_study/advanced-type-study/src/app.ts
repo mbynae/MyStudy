@@ -43,6 +43,8 @@
 // }
 // extractAndConvert({ name: '이름' }, 'name'); //정상 작동
 
+type Primitive = string | number | boolean;
+
 //클래스에서 제네릭을 통해 인수의 공통된 타입을 지정이 가능
 // class DataStorage<T> {
 //     private data:T[] = [];
@@ -60,7 +62,7 @@
 //     }
 // }
 
-// //new 연산자에 특정 타입을 지정해 해당 타입만 입력하는 클래스 생성 
+// //new 연산자에 특정 타입을 지정해 해당 타입만 입력하는 클래스 생성
 // const textStorage = new DataStorage<string>();
 // textStorage.addItem('순서');
 // textStorage.addItem('나이');

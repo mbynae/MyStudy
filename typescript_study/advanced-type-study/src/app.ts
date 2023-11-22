@@ -115,3 +115,8 @@
 // const todoTitle: Readonly<Partial<Todo>> = {
 // title: "Delete inactive users",
 // };
+function identity<Type>(arg: Type): Type {
+    return arg;
+  }
+   
+  let myIdentity: {<Type>(arg: Type): Type}  = identity;

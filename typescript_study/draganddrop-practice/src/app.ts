@@ -1,3 +1,16 @@
+//메서드 데코레이터 사용법
+function autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
+    const originalMethod = descriptor.value;
+    const adjDescriptor: PropertyDescriptor = {
+        configurable: true,
+        get() {
+            const boundFn = originalMethod.bind(this);
+            return boundFn;
+        },
+    };
+    return adjDescriptor;
+}
+
 class ProductInput {
     templateElement: HTMLTemplateElement;
     hostElement: HTMLDivElement;
@@ -22,13 +35,15 @@ class ProductInput {
         this.attach();
     }
 
+    @autobind
     private submitHandler(event: Event) {
         event.preventDefault();
         console.log(this.titleInputElement.value);
     }
 
     private configure() {
-        this.element.addEventListener('submit', event => this.submitHandler(event));
+        // this.element.addEventListener('submit', event => this.submitHandler(event));
+        this.element.addEventListener('submit', this.submitHandler);
     }
 
     private attach() {

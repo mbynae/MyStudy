@@ -2,7 +2,9 @@ class ProductInput {
     templateElement: HTMLTemplateElement;
     hostElement: HTMLDivElement;
     element: HTMLFormElement;
-    importNode2: HTMLFormElement;
+    titleInputElement: HTMLInputElement;
+    descriptionInputElement: HTMLInputElement;
+    peopleInputElement: HTMLInputElement;
 
     constructor() {
         this.templateElement = document.getElementById('project-input')! as HTMLTemplateElement;
@@ -10,16 +12,27 @@ class ProductInput {
 
         const importNode = document.importNode(this.templateElement.content, true);
         this.element = importNode.firstElementChild as HTMLFormElement;
-        this.importNode2 = this.templateElement.content.cloneNode(true)! as HTMLFormElement;
+        this.element.id = 'user-input';
+
+        this.titleInputElement = this.element.querySelector('#title')! as HTMLInputElement;
+        this.descriptionInputElement = this.element.querySelector('#description')! as HTMLInputElement;
+        this.peopleInputElement = this.element.querySelector('#people')! as HTMLInputElement;
+
+        this.configure();
         this.attach();
     }
 
+    private submitHandler(event: Event) {
+        event.preventDefault();
+        console.log(this.titleInputElement.value);
+    }
+
+    private configure() {
+        this.element.addEventListener('submit', event => this.submitHandler(event));
+    }
+
     private attach() {
-        console.log(this.importNode2);
-        // this.hostElement.insertAdjacentElement('afterbegin', this.element);
-        // this.hostElement.insertAdjacentElement('afterbegin', this.importNode2);
-        // this.hostElement.append(this.importNode2);
-        this.hostElement.append(this.templateElement.content);
+        this.hostElement.insertAdjacentElement('afterbegin', this.element);
     }
 }
 

@@ -11,6 +11,36 @@ function autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
     return adjDescriptor;
 }
 
+class ProjectList {
+    templateElement: HTMLTemplateElement;
+    hostElement: HTMLDivElement;
+    element: HTMLElement;
+
+    constructor(private type: 'active' | 'finished'){
+        this.templateElement = document.getElementById('project-list')! as HTMLTemplateElement;
+        this.hostElement = document.getElementById('app')! as HTMLDivElement;
+
+        const importNode = document.importNode(this.templateElement.content, true);
+        this.element = importNode.firstElementChild as HTMLElement;
+        this.element.id = `${this.type}-projects`;
+
+        this.renderContent();
+        this.attach();
+    };
+    
+    private renderContent(){
+        const listId = `${this.type}-projects-list`
+        this.element.querySelector('h2')!.textContent = `${this.type.toUpperCase()} PROJECTS`;
+        this.element.querySelector('ul')!.id = listId;
+    };
+
+    private attach(){
+        this.hostElement.insertAdjacentElement('beforeend', this.element);
+    };
+}
+
+
+
 interface Validatable {
     value: string | number;
     required?: boolean;
@@ -70,13 +100,6 @@ class ProductInput {
         const enteredDescription = this.descriptionInputElement.value;
         const enteredPeople = this.peopleInputElement.value;
 
-        // if (enteredTitle.trim().length === 0 || enteredDescription.trim().length === 0 || enteredPeople.trim().length === 0) {
-        //     alert("전부 입력해주세요.");
-        //     return;
-        // } else {
-        //     return [enteredTitle, enteredDescription, +enteredPeople];
-        // }
-
         const titleValidatable: Validatable = {
             value: enteredTitle,
             required: true,
@@ -129,10 +152,5 @@ class ProductInput {
 }
 
 const prjInput = new ProductInput();
-
-// ?는 | undefined 와 같은 유니언 타입을 나타낸다
-
-// !== null > null만 검사
-// != null > null과 undefined를 검사
-
-// 재사용 가능한 유효성검사 만드는 방법
+const activePrjList = new ProjectList('active');
+const finishedPrjList = new ProjectList('finished');

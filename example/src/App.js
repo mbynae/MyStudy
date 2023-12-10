@@ -10,13 +10,15 @@ import ReactionSpeedCheck from './ReactionSpeedCheck';
 import RPS from './RPS';
 import ApiText from './ApiText';
 import CustomHookText from './CustomHookText';
+import PreRenderExample from './PreRenderExample';
 
 const queryClient = new QueryClient();
 
 function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            <ReactionSpeedCheck />
+            {/* <ReactionSpeedCheck /> */}
+            <PreRenderExample />
         </QueryClientProvider>
     );
 }

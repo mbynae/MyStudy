@@ -66,7 +66,7 @@ class ProjectState {
     }
 }
 
-const projectState = ProjectState.getInstance();
+const projectState = ProjectState.getInstance(); //싱클톤으로 인해 인스턴스 생성 불가
 
 interface Validatable {
     value: string | number;

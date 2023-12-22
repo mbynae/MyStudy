@@ -1,5 +1,5 @@
-import Control from './Control';
-import Counter from './Counter';
+import Control from './zustand_react/Control';
+import Counter from './zustand_react/Counter';
 import './App.css';
 
 function App() {

@@ -1,4 +1,5 @@
 import { useStore } from './store'; // store에서 useStore를 호출
+import { store } from '../zustand_vanilla/example';
 
 export default function Control() {
     // useStore에서 사용할 state와 메서드를 호출한다.
@@ -10,12 +11,18 @@ export default function Control() {
 
     return (
         <>
-            <div className="card">
+            {/* <div className="card">
                 <button onClick={countControl}>count is {count}</button>
                 <p>클릭 시 카운트 증가</p>
             </div>
             <p className="read-the-docs">zustand 사용 테스트</p>
-            <button onClick={resetCount}>리셋 버튼</button>
+            <button onClick={resetCount}>리셋 버튼</button> */}
+            <div className="card">
+                {/* <button onClick={countControl}>count is {count}</button> */}
+                <p>클릭 시 카운트 증가</p>
+            </div>
+            {/* <p className="read-the-docs">zustand 사용 테스트</p>
+            <button onClick={resetCount}>리셋 버튼</button> */}
         </>
     );
 }

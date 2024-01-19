@@ -1,5 +1,5 @@
 import { useStore } from './store'; // store에서 useStore를 호출
-import { store } from '../zustand_vanilla/example';
+// import { store } from '../zustand_vanilla/example';
 
 export default function Control() {
     // useStore에서 사용할 state와 메서드를 호출한다.

@@ -45,7 +45,7 @@ export function createStoreHook(createState) {
                     const nextState = api.getState();
                     const nextStateSlice = selectorRef.current(nextState);
 
-                    if (!equalityFnRef.current(currentSlicRef.current, nextStateSlice)) {
+                    if (!equalityFnRef.current(currentSliceRef.current, nextStateSlice)) {
                         stateRef.current = nextState;
                         currentSliceRef.current = nextStateSlice;
                         forceUpdate();
@@ -64,7 +64,7 @@ export function createStoreHook(createState) {
             return unsubscribe;
         }, []);
 
-        return hasNewStateSlice ? newStateSlice : currentSlicRef.current;
+        return hasNewStateSlice ? newStateSlice : currentSliceRef.current;
     };
 
     Object.assign(useStore, api);
